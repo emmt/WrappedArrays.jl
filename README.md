@@ -18,7 +18,7 @@ Keyword `offset` is to specify the offset (in bytes) of the first element of `A`
 to the base address of `obj` or to the address of its first element if `obj` is an array.
 
 The constructor may also be called as `WrappedArray{T,N}(...)` with `N` the number of
-dimension which is, in general, omitted as it can be inferred from the given array shape.
+dimensions which is usually omitted as it can be inferred from the given array shape.
 
 `WrappedVector{T}` and `WrappedMatrix{T}` are aliases for `WrappedArray{T,N}` with `N`
 equal to `1` and `2` respectively.
