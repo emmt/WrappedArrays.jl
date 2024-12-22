@@ -98,6 +98,7 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         @test firstindex(A) === 1
         @test lastindex(A) === length(A)
         @test WrappedArrays.linear_indices(A) == firstindex(A):lastindex(A)
+        @test Base.has_offset_axes(A) === false
 
         # Wrapped vector with offset axis.
         @test_throws ArgumentError WrappedVector{T}(B, -1:len) # too many elements
@@ -118,6 +119,7 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         @test firstindex(X) === first(rng)
         @test lastindex(X) === last(rng)
         @test WrappedArrays.linear_indices(X) == firstindex(X):lastindex(X)
+        @test Base.has_offset_axes(X) === true
 
         # Multi-dimensional wrapped array.
         C = @inferred WrappedArray{T}(B, dims)
@@ -134,6 +136,7 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         @test firstindex(C) === 1
         @test lastindex(C) === length(C)
         @test WrappedArrays.linear_indices(C) == firstindex(C):lastindex(C)
+        @test Base.has_offset_axes(C) === false
         val = @inferred convert(T, 759)
         I = (1,2,3)
         i = LinearIndices(C)[I...]
@@ -156,6 +159,10 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         @test size(D) == dims
         @test length(D) === prod(size(D),)
         @test axes(D) == map(to_axis, shape)
+        @test firstindex(D) === 1
+        @test lastindex(D) === length(D)
+        @test WrappedArrays.linear_indices(D) == firstindex(D):lastindex(D)
+        @test Base.has_offset_axes(D) === true
         @test D[1] === A[1]
         D[3] = 42
         @test A[3] == 42

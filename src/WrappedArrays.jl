@@ -152,6 +152,7 @@ Base.size(A::WrappedArray, d::Integer) = to_dim(shape(A, d))
 Base.axes(A::WrappedArray) = to_axes(shape(A))
 Base.axes(A::WrappedArray, d::Integer) = to_axis(shape(A, d))
 Base.IndexStyle(::Type{<:WrappedArray}) = IndexLinear()
+Base.has_offset_axes(A::WrappedArray{T,N,<:Dims{N},B}) where {T,N,B} = false
 
 # NOTE: We assume that it is sufficient to preserve the wrapped object itself even though
 #       it is immutable, to also preserve the storage object. If this would not be the
