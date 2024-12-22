@@ -74,7 +74,7 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         flag &= (C[j] == i)
     end
     @test flag
-    val = @inferred T convert(T, 759)
+    val = @inferred convert(T, 759)
     I = (1,2,3)
     i = LinearIndices(C)[I...]
     C[I...] = val
