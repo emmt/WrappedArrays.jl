@@ -26,7 +26,7 @@ The constructor may also be called as `WrappedArray{T,N}(...)` with `N` the numb
 dimensions which is usually omitted as it can be inferred from the given array shape.
 
 `WrappedVector{T}` and `WrappedMatrix{T}` are aliases for `WrappedArray{T,N}` with `N`
-equal to `1` and `2` respectively.
+equals to `1` and `2` respectively.
 
 A wrapped vector with as much elements of type `T` as can be stored by `obj` (minus
 `offset` bytes if this keyword is specified) can be created with:
