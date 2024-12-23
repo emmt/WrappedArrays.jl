@@ -159,6 +159,10 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
         @test size(D) == dims
         @test length(D) === prod(size(D),)
         @test axes(D) == map(to_axis, shape)
+        for d in 1:ndims(D)+1
+            @test size(D,d) === (d ≤ ndims(D) ? size(D)[d] : 1)
+            @test axes(D,d) === (d ≤ ndims(D) ? axes(D)[d] : Base.OneTo(1))
+        end
         @test firstindex(D) === 1
         @test lastindex(D) === length(D)
         @test WrappedArrays.linear_indices(D) == firstindex(D):lastindex(D)
