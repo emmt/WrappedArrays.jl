@@ -82,11 +82,13 @@ to_axis(x::Integer) = Base.OneTo{Int}(x)
     @testset "Wrapped array (storage: $(typeof(B)))" for B in (MutableStaticBuffer{T,len}(),
                                                                Array{T}(undef,dims))
         # Wrapped vector with 1-based indices.
-        A = @inferred WrappedVector{T}(B,:)
+        A = @inferred WrappedArray{T}(B, :)
         @test eltype(A) === T
         @test length(A) === len
         @test size(A) === (length(A),)
         @test axes(A) === map(Base.OneTo, size(A))
+        @test A === @inferred WrappedArray{T,1}(B, :)
+        @test A === @inferred WrappedVector{T}(B, :)
         flag = true
         for i in 1:length(A)
             A[i] = i

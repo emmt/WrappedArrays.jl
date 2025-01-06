@@ -78,15 +78,16 @@ WrappedArray{T}(obj, inds::Tuple{ArrayDimOrAxis,Vararg{ArrayDimOrAxis}}; kwds...
     WrappedArray{T}(obj, to_shape(inds); kwds...)
 
 """
+    A = WrappedArray{T}(obj, : ; offset=0)
     A = WrappedVector{T}(obj, : ; offset=0)
 
-builds a dense vector `A` using object `obj` for backing the storage of its elements.
+build a dense vector `A` using object `obj` for backing the storage of its elements.
 Parameter `T` is the type of the elements of `A`. The result is a 1-based vector whose
 length is the maximal number of elements that can be stored in the memory occupied by `B`
 minus `offset` bytes.
 
 """
-function WrappedVector{T}(obj, ::Colon; offset::Integer = 0) where {T}
+function WrappedArray{T}(obj, ::Colon; offset::Integer = 0) where {T}
     obj, ptr, nbytes = storage_parameters(obj)
     off = checked_offset(offset, nbytes)
     maxlen = div(nbytes - off, sizeof(T))
@@ -94,6 +95,7 @@ function WrappedVector{T}(obj, ::Colon; offset::Integer = 0) where {T}
     ptr += off
     return WrappedArray{T}(UnsafeBuild(), ptr, obj, shape)
 end
+WrappedVector{T}(obj, ::Colon; kwds...) where {T} = WrappedArray{T}(obj, :; kwds...)
 
 # `storage_parameters(A)` yields the object to warrant the validity of the storage, the
 # storage base address, and the available storage size for object `A`. For an array, the

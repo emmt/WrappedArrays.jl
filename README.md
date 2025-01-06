@@ -28,10 +28,12 @@ dimensions which is usually omitted as it can be inferred from the given array s
 `WrappedVector{T}` and `WrappedMatrix{T}` are aliases for `WrappedArray{T,N}` with `N`
 equals to `1` and `2` respectively.
 
-A wrapped vector with as much elements of type `T` as can be stored by `obj` (minus
-`offset` bytes if this keyword is specified) can be created with:
+A wrapped vector `A` with as many elements of type `T` as can be stored by `obj` (minus
+`offset` bytes if this keyword is specified) can be created by replacing the array shape
+by a single colon (`:`) as in one of:
 
 ``` julia
+A = WrappedArray{T}(obj, :)
 A = WrappedVector{T}(obj, :)
 ```
 
