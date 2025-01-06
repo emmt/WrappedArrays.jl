@@ -9,6 +9,9 @@ with contiguous elements) whose elements are stored in another object. This gene
 the principle of [`StaticArrays`](https://github.com/JuliaArrays/StaticArrays.jl) which
 wrap small arrays over tuples of values.
 
+
+## Usage
+
 A wrapped array is typically built by:
 
 ``` julia
@@ -52,7 +55,36 @@ A = WrappedArray{data_eltype(B)}(B, data_length(B), offset=fieldoffset(typeof(B)
 ```
 
 builds a wrapped array `A` over the entries of the `data` member of object `B`. These
-entries are then accessible for reading, with the syntax `A[i]`, or writing, , with the
+entries are then accessible for reading, with the syntax `A[i]`, or writing, with the
 syntax `A[i] = x`, and with the same speed and safety (i.e., bound checking) as for
 regular arrays. Array `A` may also be passed to `ccall` or `@ccall` for calling a
 C-function in a shared library.
+
+
+## Installation
+
+You may directly install `WrappedArrays` from Julias's REPL:
+
+```julia
+using Pkg
+Pkg.add(url="https://github.com/emmt/WrappedArrays.jl")
+```
+
+or from Julia's package manager (after hitting `]` in Julia's REPL):
+
+``` julia
+add https://github.com/emmt/WrappedArrays.jl
+```
+
+To allow for managing version dependencies, another possibility is to use the registry
+[`EmmtRegistry`](https://github.com/emmt/EmmtRegistry):
+
+```julia
+using Pkg
+pkg"registry add General"
+pkg"registry add https://github.com/emmt/EmmtRegistry"
+pkg"add WrappedArrays"
+```
+
+Adding the `General` registry (2nd line of the above example) is mandatory to have access
+to the official Julia packages if you never have used the package manager before.
